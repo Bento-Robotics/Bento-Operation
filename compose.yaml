@@ -1,0 +1,24 @@
+version: "3.0"
+
+services:
+  bento-box:
+    build: .
+    container_name: bento_operator
+    user: root
+    privileged: true
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    volumes:
+      - /dev/input/:/dev/input/
+      - /run/udev/:/run/udev/ # for libcamera
+      - /tmp/.X11-unix/:/tmp/.X11-unix/
+      - ~/.Xauthority:/root/.Xauthority:ro
+      - ./launch-content:/launch-content:ro
+      #TODO: change to configs once possible:
+      - ./config/qt5ct.conf:/root/.config/qt5ct/qt5ct.conf:ro
+      - ./config/bento_colors.conf:/root/.config/qt5ct/colors/bento_colors.conf:ro
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_QPA_PLATFORMTHEME=qt5ct
+    command: 'ros2 launch /launch-content/operator.launch.py robot_namespace:="bento_box"'
