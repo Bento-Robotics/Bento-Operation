@@ -37,12 +37,24 @@ def generate_launch_description():
         executable='joy_linux_node',
     )
 
+    image_republish = Node(
+        package='image_transport',
+        executable='republish',
+        name='republish',
+        remappings=[
+            ('in/compressed', PathJoinSubstitution([ '/', robot_namespace, "cam1/camera_node_1/image_raw/compressed"]) ),
+            ('out', "image_repub")
+        ],
+        arguments=['compressed', 'raw'],
+    )
+
+
     zbar = Node(
         package='zbar_ros',
         executable='barcode_reader',
         name='barcode',
         parameters=[{'image_transport': 'compressed'}],
-	remappings=[('image', PathJoinSubstitution([ '/', robot_namespace, "cam1/camera_node_1/image_raw"]) )],
+	remappings=[('image', 'image_repub')],
     )
 
     tunnelvision = Node(
@@ -72,6 +84,7 @@ def generate_launch_description():
             PushRosNamespace( [LaunchConfiguration("robot_namespace"), '_opr'] ),
             bento_teleop,
             joystick,
+            image_republish,
             zbar,
             tunnelvision,
             rqt,
