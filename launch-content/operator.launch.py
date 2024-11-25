@@ -5,16 +5,14 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 
 from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-from launch.substitutions import TextSubstitution
 
-from launch.actions import GroupAction
+from launch.actions import GroupAction, SetEnvironmentVariable
 from launch_ros.actions import PushRosNamespace
 
-from launch.substitutions import EnvironmentVariable, PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, PythonExpression
 from launch_ros.substitutions import FindPackageShare
 
 
@@ -27,7 +25,10 @@ def generate_launch_description():
         package='bento_teleop',
         executable='teleop_node',
         name='teleop_node',
-        parameters=[ PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'bento_teleop.yaml' ]) ],
+        parameters=[ {'robot_namespace': PathJoinSubstitution([ '/', robot_namespace ]) },
+                     # schaeufele has 2 flipper motorcontrollers, most other robots only have wheels, so 0 as default
+                     {'rpm_override_count': PythonExpression(["2 if ('", robot_namespace, "' == 'schaeufele') else 0"  ]) },
+                     {PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'bento_teleop.yaml' ])} ],
         output='screen',
         emulate_tty=True,
     )
@@ -35,6 +36,7 @@ def generate_launch_description():
     joystick = Node(
         package='joy_linux',
         executable='joy_linux_node',
+        emulate_tty=True,
     )
 
     image_republish = Node(
@@ -46,6 +48,7 @@ def generate_launch_description():
             ('out', "image_repub")
         ],
         arguments=['compressed', 'raw'],
+        emulate_tty=True,
     )
 
 
@@ -71,6 +74,7 @@ def generate_launch_description():
         name='rqt',
         arguments=['--perspective-file', PathJoinSubstitution([ '/', 'launch-content', 'rviz.perspective'])],
         output='log',
+        emulate_tty=True,
     )
 
     return LaunchDescription([

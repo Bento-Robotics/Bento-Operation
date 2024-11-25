@@ -9,7 +9,7 @@
     button.enable: 2
     button.disable: 3
 
-    rpm_override_count: 0
+    #rpm_override_count: 2  <set by ros2launch
 
     rpm_override_0.button_forward: 9
     rpm_override_0.button_backward: 8
@@ -23,7 +23,7 @@
 
     # Publisher/service params
     publish_rate: 0.05
-    robot_namespace: '/bento_box'
+    #robot_namespace: '/bento_box'  <set by ros2launch
     enable_service_name: '/enable'
     maximum_rpm_topic: '/maximum/rpms'
     maximum_vel_topic: '/maximum/velocity'
