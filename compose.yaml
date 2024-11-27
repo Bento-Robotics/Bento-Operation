@@ -1,7 +1,7 @@
 version: "3.0"
 
 services:
-  bento-box:
+  bento-operation:
     build: .
     container_name: bento_operator
     user: root
@@ -21,4 +21,4 @@ services:
     environment:
       - DISPLAY=$DISPLAY
       - QT_QPA_PLATFORMTHEME=qt5ct
-    command: 'ros2 launch /launch-content/operator.launch.py robot_namespace:="bento_box"'
+    command: 'ros2 launch /launch-content/operator.launch.py robot_namespace:="${BENTO_ROBOT_NAME}"'
