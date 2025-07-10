@@ -25,12 +25,12 @@ def generate_launch_description():
         package='bento_teleop',
         executable='teleop_node',
         name='teleop_node',
-        parameters=[ {'robot_namespace': PathJoinSubstitution([ '/', robot_namespace ]) },
-                     # schaeufele has 2 flipper motorcontrollers, most other robots only have wheels, so 0 as default
+        parameters=[ # schaeufele has 2 flipper motorcontrollers, most other robots only have wheels, so 0 as default
                      {'rpm_override_count': PythonExpression(["2 if ('", robot_namespace, "' == 'schaeufele') else 0"  ]) },
                      {PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'bento_teleop.yaml' ])} ],
         output='screen',
         emulate_tty=True,
+        namespace=robot_namespace
     )
 
     joystick = Node(
@@ -86,11 +86,11 @@ def generate_launch_description():
         GroupAction(
         actions=[
             PushRosNamespace( [LaunchConfiguration("robot_namespace"), '_opr'] ),
-            bento_teleop,
             joystick,
             image_republish,
             zbar,
             tunnelvision,
             rqt,
-        ])
+        ]),
+        bento_teleop,
     ])
