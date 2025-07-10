@@ -1,4 +1,4 @@
-FROM ros:humble
+FROM ros:jazzy
 
 # Install dependencies & utilities
 ENV DEBIAN_FRONTEND=noninteractive
@@ -6,14 +6,14 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
 	btop \
 	qt5ct \
 	fonts-comfortaa \
-	ros-humble-joy-linux \
-	ros-humble-rqt \
-        ros-humble-zbar-ros \
-	ros-humble-rqt-robot-monitor \
-	ros-humble-rqt-reconfigure \
-	ros-humble-rqt-tf-tree \
-	ros-humble-rqt-image-view \
-	ros-humble-image-transport-plugins \
+	ros-jazzy-joy-linux \
+	ros-jazzy-rqt \
+        ros-jazzy-zbar-ros \
+	ros-jazzy-rqt-robot-monitor \
+	ros-jazzy-rqt-reconfigure \
+	ros-jazzy-rqt-tf-tree \
+	ros-jazzy-rqt-image-view \
+	ros-jazzy-image-transport-plugins \
 	-y && rm -rf /var/lib/apt/lists/*
 
 # Create workspace
@@ -33,7 +33,7 @@ RUN bash -c " \
 	 "
 
 # Set up automatic sourcing
-RUN echo "source /opt/ros/humble/setup.bash\nsource /bento_ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/jazzy/setup.bash\nsource /bento_ws/install/setup.bash" >> ~/.bashrc
 
 # Add entry point
 COPY ./entrypoint.sh /

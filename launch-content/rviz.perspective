@@ -139,7 +139,7 @@
                   "type": "repr"
                 },
                 "mouse_pub_topic": {
-                  "repr": "'/bento_box/cam1/camera_node_1/image_raw/compressed_mouse_left'",
+                  "repr": "'/camera_node_1/image_raw/compressed_mouse_left'",
                   "type": "repr"
                 },
                 "num_gridlines": {
@@ -163,7 +163,7 @@
                   "type": "repr"
                 },
                 "topic": {
-                  "repr": "'/bento_box/cam1/camera_node_1/image_raw/compressed'",
+                  "repr": "'/camera_node_1/image_raw/compressed'",
                   "type": "repr"
                 },
                 "zoom1": {
@@ -210,7 +210,7 @@
                   "type": "repr"
                 },
                 "mouse_pub_topic": {
-                  "repr": "'/bento_box/cam2/camera_node_2/image_raw/compressed_mouse_left'",
+                  "repr": "'/camera_node_2/image_raw/compressed_mouse_left'",
                   "type": "repr"
                 },
                 "num_gridlines": {
@@ -234,7 +234,7 @@
                   "type": "repr"
                 },
                 "topic": {
-                  "repr": "'/bento_box/cam2/camera_node_2/image_raw/compressed'",
+                  "repr": "'/camera_node_2/image_raw/compressed'",
                   "type": "repr"
                 },
                 "zoom1": {
