@@ -42,15 +42,17 @@ def generate_launch_description():
     image_republish = Node(
         package='image_transport',
         executable='republish',
-        name='republish',
+        name='image_republisher',
         remappings=[
-            ('in/compressed', PathJoinSubstitution([ '/', robot_namespace, "cam1/camera_node_1/image_raw/compressed"]) ),
+            ('in/compressed', PathJoinSubstitution([ '/', robot_namespace, "cam2/camera_node_2/image_raw/compressed"]) ),
             ('out', "image_repub")
         ],
-        arguments=['compressed', 'raw'],
+        parameters=[
+            {'in_transport': 'compressed'},
+            {'out_transport': 'raw'},
+        ],
         emulate_tty=True,
     )
-
 
     zbar = Node(
         package='zbar_ros',
