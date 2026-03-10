@@ -62,6 +62,29 @@ def generate_launch_description():
 	remappings=[('image', 'image_repub')],
     )
 
+    image_republish_arm = Node(
+        package='image_transport',
+        executable='republish',
+        name='image_republisher',
+        remappings=[
+            ('in/compressed', PathJoinSubstitution([ '/', robot_namespace, "cam3/camera_node_3/image_raw/compressed"]) ),
+            ('out', "image_repub_arm")
+        ],
+        parameters=[
+            {'in_transport': 'compressed'},
+            {'out_transport': 'raw'},
+        ],
+        emulate_tty=True,
+    )
+
+    zbar_arm = Node(
+        package='zbar_ros',
+        executable='barcode_reader',
+        name='barcode',
+        parameters=[{'image_transport': 'compressed'}],
+	remappings=[('image', 'image_repub_arm')],
+    )
+
     tunnelvision = Node(
         package='TunnelVision',
         executable='process_QR',
@@ -91,6 +114,8 @@ def generate_launch_description():
             joystick,
             image_republish,
             zbar,
+            image_republish_arm,
+            zbar_arm,
             tunnelvision,
             rqt,
         ]),
