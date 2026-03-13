@@ -16,6 +16,10 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
 	ros-jazzy-image-transport-plugins \
 	-y && rm -rf /var/lib/apt/lists/*
 
+# Workaround so we don't have to re-download everything every time
+# Use with `--build-arg CACHEBUST=1`
+ARG CACHEBUST=0
+
 # Create workspace
 RUN mkdir -p /bento_ws/src
 WORKDIR /bento_ws
