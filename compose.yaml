@@ -9,6 +9,7 @@ services:
     network_mode: "host"
     stdin_open: true
     tty: true
+    working_dir: /launch-content/
     volumes:
       - /dev/input/:/dev/input/
       - /run/udev/:/run/udev/ # for libcamera

@@ -7,6 +7,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install \
 	qt5ct \
 	fonts-comfortaa \
 	ros-jazzy-joy-linux \
+        ros-jazzy-rviz2 \
 	ros-jazzy-rqt \
         ros-jazzy-zbar-ros \
 	ros-jazzy-rqt-robot-monitor \

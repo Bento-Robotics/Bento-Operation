@@ -27,7 +27,7 @@ def generate_launch_description():
         name='teleop_node',
         parameters=[ # schaeufele has 2 flipper motorcontrollers, most other robots only have wheels, so 0 as default
                      {'rpm_override_count': PythonExpression(["2 if ('", robot_namespace, "' == 'schaeufele') else 0"  ]) },
-                     {PathJoinSubstitution([ '/', 'launch-content', 'parameters', 'bento_teleop.yaml' ])} ],
+                     {PathJoinSubstitution([ os.getcwd(), 'parameters', 'bento_teleop.yaml' ])} ],
         output='screen',
         emulate_tty=True,
         namespace=robot_namespace
@@ -38,6 +38,16 @@ def generate_launch_description():
         executable='joy_linux_node',
         emulate_tty=True,
     )
+
+
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz',
+        arguments=['-d', PathJoinSubstitution([ os.getcwd(), 'bento_teleop_view.rviz' ])],
+        emulate_tty=True,
+    )
+
 
     image_republish = Node(
         package='image_transport',
@@ -59,7 +69,7 @@ def generate_launch_description():
         executable='barcode_reader',
         name='barcode',
         parameters=[{'image_transport': 'compressed'}],
-	remappings=[('image', 'image_repub')],
+	remappings=[('image', 'image_repub'), ('barcode', 'cam1/barcode')],
     )
 
     image_republish_arm = Node(
@@ -82,12 +92,12 @@ def generate_launch_description():
         executable='barcode_reader',
         name='barcode',
         parameters=[{'image_transport': 'compressed'}],
-	remappings=[('image', 'image_repub_arm')],
+	remappings=[('image', 'image_repub_arm'), ('barcode', 'cam2/barcode')],
     )
 
     tunnelvision = Node(
         package='TunnelVision',
-        executable='process_QR',
+        executable='dual_process_QR',
         name='qr_antiduplicate',
         output='both',
         emulate_tty=True,
@@ -97,7 +107,7 @@ def generate_launch_description():
         package='rqt_gui',
         executable='rqt_gui',
         name='rqt',
-        arguments=['--perspective-file', PathJoinSubstitution([ '/', 'launch-content', 'rviz.perspective'])],
+        arguments=['--perspective-file', PathJoinSubstitution([ os.getcwd(), 'rviz.perspective'])],
         output='log',
         emulate_tty=True,
     )
@@ -117,6 +127,7 @@ def generate_launch_description():
             image_republish_arm,
             zbar_arm,
             tunnelvision,
+            rviz,
             rqt,
         ]),
         bento_teleop,

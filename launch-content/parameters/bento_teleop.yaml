@@ -11,7 +11,7 @@
     arm/button.home: 5
     arm/button.use_arm_mode: 0
     # movement speed multiplier, directly multiplied on
-    arm/speed_multiplier: 20
+    arm/speed_multiplier: 20.0
 
   # Drive
     drive/axis.throttle: 3
