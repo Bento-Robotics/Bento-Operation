@@ -151,7 +151,7 @@
                   "type": "repr"
                 },
                 "rotate": {
-                  "repr": "2",
+                  "repr": "0",
                   "type": "repr"
                 },
                 "smooth_image": {
@@ -222,7 +222,7 @@
                   "type": "repr"
                 },
                 "rotate": {
-                  "repr": "0",
+                  "repr": "2",
                   "type": "repr"
                 },
                 "smooth_image": {
