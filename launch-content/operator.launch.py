@@ -87,6 +87,22 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
+    image_rotate_arm = Node(
+        package='image_rotate',
+        executable='image_flip_node',
+        name='image_rotate',
+        remappings=[
+            ('image', "image_repub_arm" ),
+            ('out', "rodaydo_podayto" )
+        ],
+        parameters=[
+            {'image_transport': 'raw'},
+#            {'out_transport': 'raw'},
+        ],
+        emulate_tty=True,
+    )
+
+
     zbar_arm = Node(
         package='zbar_ros',
         executable='barcode_reader',
@@ -122,9 +138,10 @@ def generate_launch_description():
         actions=[
             PushRosNamespace( [LaunchConfiguration("robot_namespace"), '_opr'] ),
             joystick,
-            image_republish,
-            zbar,
+#            image_republish,
+#            zbar,
             image_republish_arm,
+#            image_rotate_arm,
             zbar_arm,
             tunnelvision,
             rviz,
