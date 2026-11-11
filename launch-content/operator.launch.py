@@ -46,6 +46,9 @@ def generate_launch_description():
         name='rviz',
         arguments=['-d', PathJoinSubstitution([ os.getcwd(), 'bento_teleop_view.rviz' ])],
         emulate_tty=True,
+#        remappings=[('/tf', [LaunchConfiguration("robot_namespace"), '/tf']),
+ #                   ('/tf_static',[LaunchConfiguration("robot_namespace"), '/tf_static'])],
+        remappings=[('/tf', '/bento_box/tf'),('/tf_static', '/bento_box/tf_static')],
     )
 
 
