@@ -48,7 +48,7 @@ def generate_launch_description():
         emulate_tty=True,
 #        remappings=[('/tf', [LaunchConfiguration("robot_namespace"), '/tf']),
  #                   ('/tf_static',[LaunchConfiguration("robot_namespace"), '/tf_static'])],
-        remappings=[('/tf', '/bento_box/tf'),('/tf_static', '/bento_box/tf_static')],
+#        remappings=[('/tf', '/bento_box/tf'),('/tf_static', '/bento_box/tf_static')],
     )
 
 
@@ -134,12 +134,12 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'robot_namespace',
-            default_value='bento',
+            default_value='',
             description='set namespace for robot nodes'
         ),
         GroupAction(
         actions=[
-            PushRosNamespace( [LaunchConfiguration("robot_namespace"), '_opr'] ),
+            PushRosNamespace( [LaunchConfiguration("robot_namespace"), '/opr'] ),
             joystick,
 #            image_republish,
 #            zbar,
